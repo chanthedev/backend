@@ -38,7 +38,7 @@ genai.configure(api_key=GENAI_API_KEY)
 model = genai.GenerativeModel('gemini-2.5-flash', system_instruction=SYSTEM_PROMPT)
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["https://chanthedev.cloud", "https://www.chanthedev.cloud"])
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
