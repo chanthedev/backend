@@ -59,8 +59,13 @@ def chat():
         ]
         last_input = messages[-1]["content"]
 
+        # 마지막 메시지의 언어 감지 (한글 포함 여부로 판단)
+        has_korean = any('\uAC00' <= c <= '\uD7A3' for c in last_input)
+        lang_instruction = "반드시 한국어로만 답변해라." if has_korean else "You MUST reply in English only."
+        prompt = f"{lang_instruction}\n\n{last_input}"
+
         chat = model.start_chat(history=history)
-        response = chat.send_message(last_input)
+        response = chat.send_message(prompt)
 
         reply_text = response.text
 
